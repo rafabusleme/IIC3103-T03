@@ -1,0 +1,49 @@
+.chat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.box-message {
+  display: flex;
+  width: 100%;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: auto;
+}
+
+.left-message {
+  align-self:flex-start;
+  display: flex;
+  width: 80%;
+  padding: 20px 5px;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 2px;
+  margin: 2px 0
+}
+
+.right-message {
+  align-self:flex-end;
+  width: 80%;
+  padding: 20px 5px;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 2px;
+  margin: 2px 0
+}
+
+.nickname {
+  display: flex;
+}
+
+.send {
+  display: flex;
+}
