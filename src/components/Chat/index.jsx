@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import { io } from 'socket.io-client';
-
-import { ENDPOINT } from '../../constants';
 import Message from './components/Message';
 
 import './styles.css';
 
-function Chat() {
+function Chat({ socket }) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [nickname, setNickname] = useState('');
@@ -17,28 +14,20 @@ function Chat() {
     setMessage(e.target.value);
   }
 
+  function sendMessage() {
+    socket.emit('CHAT', { name: nickname, message });
+    setMessage('');
+  }
+
   function onSetNickName() {
     if (nickname.length > 0) return setDisplayChat(true);
     alert('Debes elegir un nombre válido');
   }
 
-  function isOdd(number) {
-    const mod = number % 2;
-    if (mod === 0) return true;
-    return false;
-  }
-
   useEffect(() => {
-    const socket = io(ENDPOINT, {
-      path: '/flights/',
-    });
-
-    console.log('deb');
-
     socket.on('CHAT', (data) => {
-      const auxFlights = messages;
-      auxFlights.push(data);
-      setMessages(auxFlights);
+      console.log(data);
+      setMessages((prevState) => [...prevState, data]);
     });
 
     return () => socket.disconnect();
@@ -47,17 +36,20 @@ function Chat() {
   return (
     <div className="chat">
       <div className="box-message">
-        {messages.map((message, index) => (
-          <Message
-            key={index}
-            name={message.name}
-            message={message.message}
-            date={message.date}
-            left={!isOdd}
-          />
-        ))}
+        <h1>Chat - {nickname}</h1>
+        <div className="messages">
+          {messages.map((message, index) => (
+            <Message
+              key={index}
+              name={message.name}
+              message={message.message}
+              date={message.date}
+              left={!(message.name === nickname)}
+            />
+          ))}
+        </div>
         {!displayChat ? (
-          <div className="nickname">
+          <div className="send">
             <input
               type="text"
               placeholder="Elige un nickname..."
@@ -74,14 +66,10 @@ function Chat() {
               value={message}
               onChange={(e) => handleMessage(e)}
             />
-            <button>Enviar</button>
+            <button onClick={() => sendMessage()}>Enviar</button>
           </div>
         )}
       </div>
-      {/* <div className="messages">
-        <div className="left-message">Hola soy un mensaje</div>
-        <div className="right-message">Hola soy otro mensaje</div>
-      </div> */}
     </div>
   );
 }

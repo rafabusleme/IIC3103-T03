@@ -5,45 +5,68 @@
   align-items: center;
   height: 100%;
   width: 100%;
+  border: 1px solid black;
+  box-sizing: border-box;
 }
 
 .box-message {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
   width: 100%;
 }
 
 .messages {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow: auto;
+  height: 90%;
+  padding: 5px;
+  overflow-y: auto;
 }
 
 .left-message {
   align-self:flex-start;
   display: flex;
+  flex-direction: column;
   width: 80%;
-  padding: 20px 5px;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   border: 1px solid black;
   border-radius: 2px;
-  margin: 2px 0
+  margin: 2px 0;
 }
 
 .right-message {
   align-self:flex-end;
+  display: flex;
+  background-color: greenyellow;
+  flex-direction: column;
   width: 80%;
-  padding: 20px 5px;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   border: 1px solid black;
   border-radius: 2px;
-  margin: 2px 0
-}
-
-.nickname {
-  display: flex;
+  margin: 2px 0;
 }
 
 .send {
   display: flex;
+  width: 100%;
+}
+
+input {
+  padding: 10px 5px;
+  width: 80%;
+}
+
+button {
+  width: 20%;
+  padding: 5px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
