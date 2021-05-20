@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/iic3103-t03/static/css/main.e15e1246.chunk.css",
+    "main.js": "/iic3103-t03/static/js/main.6960e3ec.chunk.js",
+    "main.js.map": "/iic3103-t03/static/js/main.6960e3ec.chunk.js.map",
+    "runtime-main.js": "/iic3103-t03/static/js/runtime-main.d4ef5cd1.js",
+    "runtime-main.js.map": "/iic3103-t03/static/js/runtime-main.d4ef5cd1.js.map",
+    "static/css/2.3d0b8d2d.chunk.css": "/iic3103-t03/static/css/2.3d0b8d2d.chunk.css",
+    "static/js/2.c03a2237.chunk.js": "/iic3103-t03/static/js/2.c03a2237.chunk.js",
+    "static/js/2.c03a2237.chunk.js.map": "/iic3103-t03/static/js/2.c03a2237.chunk.js.map",
+    "index.html": "/iic3103-t03/index.html",
+    "static/css/2.3d0b8d2d.chunk.css.map": "/iic3103-t03/static/css/2.3d0b8d2d.chunk.css.map",
+    "static/css/main.e15e1246.chunk.css.map": "/iic3103-t03/static/css/main.e15e1246.chunk.css.map",
+    "static/js/2.c03a2237.chunk.js.LICENSE.txt": "/iic3103-t03/static/js/2.c03a2237.chunk.js.LICENSE.txt",
+    "static/media/styles.css": "/iic3103-t03/static/media/airplane.67a529c4.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d4ef5cd1.js",
+    "static/css/2.3d0b8d2d.chunk.css",
+    "static/js/2.c03a2237.chunk.js",
+    "static/css/main.e15e1246.chunk.css",
+    "static/js/main.6960e3ec.chunk.js"
+  ]
+}
