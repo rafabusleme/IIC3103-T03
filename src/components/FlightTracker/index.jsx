@@ -1,64 +1,72 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 
 import L from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
-import { io } from 'socket.io-client';
 
 import './styles.css';
 import 'leaflet/dist/leaflet.css';
-import { ENDPOINT } from '../../constants';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   shadowSize: null,
-  iconSize: new L.Point(30, 40),
+  iconSize: new L.Point(40, 40),
   className: 'airplane-icon',
 });
 
+const redOptions = { color: 'red' };
 const blackOptions = { color: 'black' };
 
-function FlightTracker() {
+function FlightTracker({ socket }) {
   const [flights, setFlights] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [positions, setPositions] = useState({});
+  const [path, setPath] = useState({});
 
   useEffect(() => {
-    const socket = io(ENDPOINT, {
-      path: '/flights/',
+    socket.on('FLIGHTS', (data) => {
+      console.log(data);
+      setFlights((prevState) => [...prevState, ...data]);
     });
-
-    // socket.on('FLIGHTS', (data) => {
-    //   console.log(data);
-    //   setFlights((prevState) => [...prevState, data]);
-    // });
 
     socket.on('POSITION', (data) => {
-      const auxFlights = positions;
-      auxFlights[data.code] = data.position;
-      setPositions(auxFlights);
+      setPositions((prevState) => {
+        const flights = { ...prevState };
+        flights[data.code] = data.position;
+        return flights;
+      });
+      setPath((prevState) => {
+        const flights = { ...prevState };
+        flights[data.code] = prevState[data.code]
+          ? [...prevState[data.code], data.position]
+          : [data.position];
+        return { ...flights };
+      });
     });
+
+    socket.emit('FLIGHTS', {});
 
     return () => socket.disconnect();
   }, []);
+
   return (
-    <MapContainer className="map" center={[0, 0]} zoom={2} scrollWheelZoom={false}>
+    <MapContainer className="map" center={[-36, -70]} zoom={5} scrollWheelZoom={false}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-
       {Object.keys(positions).map((key, index) => (
         <Marker key={key} position={positions[key]}>
           <Popup>{key}</Popup>
         </Marker>
       ))}
+      {Object.keys(path).map((key, index) => (
+        <Polyline key={key} positions={path[key]} pathOptions={blackOptions} />
+      ))}
       {flights.map((flight, key) => (
         <Polyline
           key={key}
           positions={[flight.origin, flight.destination]}
-          pathOptions={blackOptions}
+          pathOptions={redOptions}
         />
       ))}
     </MapContainer>
